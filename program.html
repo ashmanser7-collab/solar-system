@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Program</title>
+</head>
+<style>
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar {
+  display: none;
+}
+</style>
+<body style="margin: 0;">
+    <canvas id="canvas" style="display: block;"></canvas>
+
+    <script>
+        const PARENT_ORIGIN = "http://127.0.0.1:5500";
+
+        const params = new URLSearchParams(window.location.search);
+
+        const width = Number(params.get("width")) || 600;
+        const height = Number(params.get("height")) || 600;
+
+        const stepsperrender = Number(params.get("stepsperrender")) || 1;
+        const timeStep = Number(params.get("timeStep")) || 86400;
+        const scale = Number(params.get("scale")) || 4.4951e-13;
+        const radiusScale = Number(params.get("radiusScale")) || 6.371e-8;
+
+        const canvas = document.getElementById("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        let firstOutputLogged = false;
+        var Module = {
+            canvas,
+            programWidth: width,
+            programHeight: height,
+            stepsperrender: stepsperrender,
+            timeStep: timeStep,
+            scale: scale,
+            radiusScale: radiusScale,
+            onRuntimeInitialized: () => {
+                parent.postMessage({ type: "program-ready" }, PARENT_ORIGIN);
+            },
+            print: text => {
+                if (!firstOutputLogged) {
+                    console.debug("Module.print called:", text);
+                    firstOutputLogged = true;
+                }
+                parent.postMessage(
+                    { type: "emscripten-output", stream: "stdout", text },
+                    PARENT_ORIGIN
+                );
+            },
+            printErr: text => {
+                if (!firstOutputLogged) {
+                    console.debug("Module.printErr called:", text);
+                    firstOutputLogged = true;
+                }
+                parent.postMessage(
+                    { type: "emscripten-output", stream: "stderr", text },
+                    PARENT_ORIGIN
+                );
+            }
+            
+        };
+        window.addEventListener("message", event => {
+            if (event.source !== parent || event.origin !== PARENT_ORIGIN) return;
+        
+            const message = event.data;
+            if (message?.type !== "set-variable") return;
+            if (!LIVE_VARIABLES.has(message.id)) return;
+            if (typeof message.value !== "number" || !Number.isFinite(message.value)) return;
+        
+            Module[message.id] = message.value;
+        });
+
+    </script>
+
+    <script src="index.js"></script>
+</body>
+</html>
