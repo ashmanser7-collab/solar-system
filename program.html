@@ -73,6 +73,19 @@ body::-webkit-scrollbar {
         
             Module[message.id] = message.value;
         });
+        if (message?.type === "download-canvas") {
+            canvas.toBlob(blob => {
+                if (!blob) {console.log("Not blob..."); return;}
+            
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.download = "simulation.png";
+                link.href = url;
+                link.click();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            }, "image/png");
+            return;
+        }
 
     </script>
 
