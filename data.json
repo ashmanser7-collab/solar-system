@@ -7,5 +7,5 @@
         {"id": "scale", "min": 1e-13, "max": 10e-13, "step": 1e-15, "type": "constant", "default": 4.4951e-13}
     ],
     "description": "This was my very first glfw project. It is very simple and uses all the actual values for weight, velocity, orbital radius, e.t.c for all the planets in our solar system. ",
-    "controls": "The program tells you the time elapsed in hours. The timeStep variable is the amount of time in seconds that are simualted with each step (in seconds) and stepsperrender represents the number steps taken between each rendering pass. the radiusScale and scale variables represent the amount by which the dimensions and positions of the planets re changed for rendering."
+    "controls": "The program tells you the time elapsed in hours. The timeStep variable is the amount of time in seconds that are simualted with each step (in seconds) and stepsperrender represents the number steps taken between each rendering pass. Scale represent the amount by which the positioning of the objects is scaled for rendering."
 }
