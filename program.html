@@ -14,8 +14,14 @@ body::-webkit-scrollbar {
     <canvas id="canvas" style="display: block;"></canvas>
 
     <script>
-        const PARENT_ORIGIN = "https://ashmanser7-collab.github.io/";
+        const PARENT_ORIGIN = document.referrer
+            ? new URL(document.referrer).origin
+            : null;
         const LIVE_VARIABLES = new Set(["timeStep", "stepsperrender"]);
+
+        const sendToParent = message => {
+            if (PARENT_ORIGIN) parent.postMessage(message, PARENT_ORIGIN);
+        };
 
         const params = new URLSearchParams(window.location.search);
 
@@ -39,32 +45,26 @@ body::-webkit-scrollbar {
             timeStep: timeStep,
             scale: scale,
             onRuntimeInitialized: () => {
-                parent.postMessage({ type: "program-ready" }, PARENT_ORIGIN);
+                sendToParent({ type: "program-ready" });
             },
             print: text => {
                 if (!firstOutputLogged) {
                     console.debug("Module.print called:", text);
                     firstOutputLogged = true;
                 }
-                parent.postMessage(
-                    { type: "emscripten-output", stream: "stdout", text },
-                    PARENT_ORIGIN
-                );
+                sendToParent({ type: "emscripten-output", stream: "stdout", text });
             },
             printErr: text => {
                 if (!firstOutputLogged) {
                     console.debug("Module.printErr called:", text);
                     firstOutputLogged = true;
                 }
-                parent.postMessage(
-                    { type: "emscripten-output", stream: "stderr", text },
-                    PARENT_ORIGIN
-                );
+                sendToParent({ type: "emscripten-output", stream: "stderr", text });
             }
             
         };
         window.addEventListener("message", event => {
-            if (event.source !== parent || event.origin !== PARENT_ORIGIN) return;
+            if (!PARENT_ORIGIN || event.source !== parent || event.origin !== PARENT_ORIGIN) return;
         
             const message = event.data;
             if (message?.type !== "set-variable") return;
