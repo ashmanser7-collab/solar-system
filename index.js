@@ -12163,8 +12163,6 @@ var wasmImports = {
   /** @export */
   getProgramWidth,
   /** @export */
-  get_radiusScale,
-  /** @export */
   get_scale,
   /** @export */
   get_stepsperrender,

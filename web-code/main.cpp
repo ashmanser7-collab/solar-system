@@ -31,7 +31,7 @@ EM_JS(double, get_radiusScale, (), {
 double scale = get_scale();
 int stepsperrender = get_stepsperrender();
 double timeStep = get_timeStep();
-double radiusScale = get_radiusScale();
+double radiusScale = 6.371e-8;
 const double PI = 3.14159265358979323846;
 const double gravity = 6.6743e-11;
 

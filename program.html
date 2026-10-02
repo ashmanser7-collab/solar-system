@@ -25,7 +25,6 @@ body::-webkit-scrollbar {
         const stepsperrender = Number(params.get("stepsperrender")) || 1;
         const timeStep = Number(params.get("timeStep")) || 86400;
         const scale = Number(params.get("scale")) || 4.4951e-13;
-        const radiusScale = Number(params.get("radiusScale")) || 6.371e-8;
 
         const canvas = document.getElementById("canvas");
         canvas.width = width;
@@ -39,7 +38,6 @@ body::-webkit-scrollbar {
             stepsperrender: stepsperrender,
             timeStep: timeStep,
             scale: scale,
-            radiusScale: radiusScale,
             onRuntimeInitialized: () => {
                 parent.postMessage({ type: "program-ready" }, PARENT_ORIGIN);
             },

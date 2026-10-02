@@ -4,8 +4,7 @@
     "variables": [
         {"id": "stepsperrender", "min": 1, "max": 365, "step": 1, "type": "active", "default": 1},
         {"id": "timeStep", "min": 60, "max": 172800, "step": 3600, "type": "active", "default": 86400},
-        {"id": "scale", "min": 1e-13, "max": 10e-13, "step": 1e-15, "type": "constant", "default": 4.4951e-13},
-        {"id": "radiusScale", "min": 1e-8, "max": 10e-8, "step": 1e-10, "type": "constant", "default": 6.371e-8}
+        {"id": "scale", "min": 1e-13, "max": 10e-13, "step": 1e-15, "type": "constant", "default": 4.4951e-13}
     ],
     "description": "This was my very first glfw project. It is very simple and uses all the actual values for weight, velocity, orbital radius, e.t.c for all the planets in our solar system. ",
     "controls": "The program tells you the time elapsed in hours. The timeStep variable is the amount of time in seconds that are simualted with each step (in seconds) and stepsperrender represents the number steps taken between each rendering pass. the radiusScale and scale variables represent the amount by which the dimensions and positions of the planets re changed for rendering."
