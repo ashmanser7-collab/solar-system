@@ -163,3 +163,19 @@ int main() {
 
     return 0;
 }
+
+extern "C" {
+
+EMSCRIPTEN_KEEPALIVE
+void stopProgram() {
+    emscripten_cancel_main_loop();
+
+    if (window) {
+        glfwDestroyWindow(window);
+        window = nullptr;
+    }
+
+    glfwTerminate();
+}
+
+}
