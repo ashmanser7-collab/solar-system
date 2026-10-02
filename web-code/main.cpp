@@ -24,10 +24,6 @@ EM_JS(double, get_scale, (), {
     return Module.scale;
 });
 
-EM_JS(double, get_radiusScale, (), {
-    return Module.radiusScale;
-});
-
 double scale = get_scale();
 int stepsperrender = get_stepsperrender();
 double timeStep = get_timeStep();

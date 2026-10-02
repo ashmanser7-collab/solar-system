@@ -12081,7 +12081,6 @@ function getProgramHeight() { return Module.programHeight; }
 function get_timeStep() { return Module.timeStep; }
 function get_stepsperrender() { return Module.stepsperrender; }
 function get_scale() { return Module.scale; }
-function get_radiusScale() { return Module.radiusScale; }
 
 // Imports from the Wasm binary.
 var _stopProgram = Module['_stopProgram'] = makeInvalidEarlyAccess('_stopProgram');
